@@ -25,6 +25,7 @@ echo "${GREEN}Installing Azul Zulu JDK 17${ENDCOLOR}"
 # install Azul Zulu JDK 17
 sudo apt-get -y install zulu17-jdk
 echo " "
+sudo rm -r ./zulu-repo_1.0.0-3_all.deb
 echo "${GREEN}Installation complete! Your Java version is:${ENDCOLOR}"
 
 sudo java -version
