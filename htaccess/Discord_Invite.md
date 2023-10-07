@@ -1,33 +1,38 @@
-### Discord kutsulinkki verkkotunnukselle tai aliverkkotunnukselle
+# Kutsulinkki Discord-palvelimellesi verkkotunnuksella tai aliverkkotunnuksella
 
-Saat oman Discord palvelimesi JSON tiedoston: Palvelinasetukset -> Pienoisohjelma. Laita ominaisuus päälle ja kopio JSON linkki. Muista myös määrittää kutsukanava
+Luo kutsulinkki Discord-palvelimellesi käyttämällä JSON-tiedostoa: Palvelinasetukset -> Pienoisohjelma. Ota ominaisuus käyttöön ja kopioi JSON-linkki. Varmista myös, että määrität kutsukanavan.
 
-1. Luo juurihakemistoon invite.php tiedosto.
-2. Liitä alla oleva koodi PHP tiedostoon. 
-```php
-<?php
-// Avataan Discord API JSON-tiedosto
-$json = file_get_contents('https://discord.com/api/guilds/<GUILD ID>/widget.json');
+1. Luo `invite.php`-tiedosto juurihakemistoon.
 
-// Muutetaan se PHP:n taulukoksi
-$data = json_decode($json, true);
+2. Liitä seuraava PHP-koodi `invite.php`-tiedostoon:
 
-// Haetaan invite.php mukaisen URL:in arvo
-$inviteUrl = $data['instant_invite'];
+   ```php
+   <?php
+   // Avaa Discord API:n JSON-tiedosto
+   $json = file_get_contents('https://discord.com/api/guilds/<GUILD ID>/widget.json');
 
-// Ohjataan käyttäjä uudelleen
-header("Location: $inviteUrl");
-exit;
-```
+   // Muunna se PHP-taulukoksi
+   $data = json_decode($json, true);
 
-3. Lisää .htaccess tiedostoon:
-```apache
-RewriteEngine On  #Huomaa että tämä saattaa olla jo .htaccess tiedostossa.
+   // Hae kutsun URL-osoite invite.php:lle
+   $inviteUrl = $data['instant_invite'];
 
-RewriteCond %{REQUEST_URI} ^/invite$
-RewriteRule ^(.*)$ invite.php [L]
-```
+   // Ohjaa käyttäjä
+   header("Location: $inviteUrl");
+   exit;
+   ```
+   Korvaa `<GUILD ID>` todellisella Discord-palvelimesi ID:llä.
 
-Nyt esimerkki,fi/invite ohjaa käyttäjät Discord palvelimellesi. aina uudella kutsulla jota Discordin pienoisohjelma itse päivittää. 
+3. Lisää seuraava koodi `.htaccess`-tiedostoon:
+   ```apache
+   RewriteEngine On  # Huomaa, että tämä saattaa jo olla .htaccess-tiedostossasi.
 
-Jos käytät aliverkkotunnusta (esimerkiksi discord.domain.tld), nimeä invite.php tiedoto index.php tiedostoksi. Sinun ei tarvitse muuttaa mitään .htaccess tiedostossa jos index.php on aliverkkotunnuksen juurihakemistossa.
+   RewriteCond %{REQUEST_URI} ^/discord$
+   RewriteRule ^(.*)$ invite.php [L]
+   ```
+
+Nyt, kun käyttäjät vierailevat osoitteessa `esimerkki.fi/discord`, he ohjautuvat Discord-palvelimellesi uudella kutsulinkillä, joka päivittyy Discordin pienoisohjelman avulla.       
+   
+HUOM! Jos käytät aliverkkotunnusta (esim., `discord.domain.tld`), nimeä `invite.php`-tiedosto `index.php`:ksi.    
+Sinun ei tarvitse muokata mitään `.htaccess`-tiedostossa, jos index.php on aliverkkotunnuksen juurihakemistossa.
+
