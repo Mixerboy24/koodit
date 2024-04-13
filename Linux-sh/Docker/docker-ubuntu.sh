@@ -1,4 +1,4 @@
-echo "Installing Docer to Ubuntu OS..."
+echo "Installing Docker to Ubuntu OS..."
 # Add Docker's official GPG key:
 sudo apt-get update -y
 sudo apt-get install -y ca-certificates curl gnupg
