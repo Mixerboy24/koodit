@@ -18,7 +18,7 @@ fi
 state=$(echo "$response" | grep -oP '"state":\s*"\K[^"]+')
 
 # Tarkista vain tietynlaiset virhetilat
-if [[ "$state" == "Offline" || "$state" == "Offline after error" || "$state" == "Closed" ]]; then
+if [[ "$state" == "Offline" || "$state" == "Offline after error" || "$state" == "Opening serial connection" || "$state" == "Closed" ]]; then
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Virhetila: $state. Käynnistetään CT $CT_ID uudelleen." >> "$LOG_FILE"
     /usr/sbin/pct reboot "$CT_ID"
 else
