@@ -8,6 +8,7 @@ Shell-skripti, joka valvoo OctoPrintin yhteyden tilaa ja käynnistää Proxmox-k
   - `Offline`
   - `Offline after error`
   - `Closed`
+  - `Opening serial connection`
 - Lokittaa kaikki toimenpiteet `/var/log/octoprint_monitor.log`.
 
 ## Vaatimukset
